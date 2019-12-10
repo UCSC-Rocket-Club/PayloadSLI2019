@@ -8,6 +8,7 @@
  
 #include <SPI.h>
 #include <RH_RF95.h>
+#define FLIGHT_MODE  1
  
 // for Feather32u4 RFM9x
 #define RFM95_CS 8
@@ -77,7 +78,8 @@ void setup()
   pinMode(LED, OUTPUT);
   pinMode(RFM95_RST, OUTPUT);
   digitalWrite(RFM95_RST, HIGH);
- 
+  
+  #ifdef FLIGHT_MODE
   Serial.begin(115200);
   while (!Serial) {
     delay(1);
@@ -85,27 +87,38 @@ void setup()
   delay(100);
  
   Serial.println("Feather LoRa RX Test!");
+  #endif
  
   // manual reset
   digitalWrite(RFM95_RST, LOW);
   delay(10);
   digitalWrite(RFM95_RST, HIGH);
   delay(10);
- 
+
+  #ifdef FLIGHT_MODE 
   while (!rf95.init()) {
     Serial.println("LoRa radio init failed");
     Serial.println("Uncomment '#define SERIAL_DEBUG' in RH_RF95.cpp for detailed debug info");
     while (1);
   }
+  #endif
+  
+  #ifdef FLIGHT_MODE
   Serial.println("LoRa radio init OK!");
- 
+  #endif
+  
   // Defaults after init are 434.0MHz, modulation GFSK_Rb250Fd250, +13dbM
+  #ifdef FLIGHT_MODE
   if (!rf95.setFrequency(RF95_FREQ)) {
     Serial.println("setFrequency failed");
     while (1);
   }
+  #endif
+
+  #ifdef FLIGHT_MODE
   Serial.print("Set Freq to: "); Serial.println(RF95_FREQ);
- 
+  #endif
+  
   // Defaults after init are 434.0MHz, 13dBm, Bw = 125 kHz, Cr = 4/5, Sf = 128chips/symbol, CRC on
  
   // The default transmitter power is 13dBm, using PA_BOOST.
@@ -135,7 +148,8 @@ void loop()
     // initialization for message array
     uint8_t buf[RH_RF95_MAX_MESSAGE_LEN];
     uint8_t len = sizeof(buf);
- 
+
+    #ifdef FLIGHT_MODE
     if (rf95.recv(buf, &len) )
     {
       
@@ -204,11 +218,14 @@ void loop()
       
       digitalWrite(LED, LOW);
     }
+    #endif
+
+    #ifdef FLIGHT_MODE
     else
     {
       Serial.println("!! -- Receive failed -- !!");
     }
-
+    #endif
 
 
   }
