@@ -56,10 +56,9 @@ void setup() {
 }
 int16_t packetnum = 0;  // packet counter, we increment per xmission
 char command[] = "p";
-void loop()
-{
+
+void loop() {
   delay(1000); // Wait 1 second between transmits, could also 'sleep' here!
-  Serial.println("Transmitting..."); // Send a message to rf95_server
   
   Serial.print("Enter Command: ");
   while (!Serial.available()){
@@ -99,4 +98,5 @@ void loop()
   {
     Serial.println("No reply, is there a listener around?");
   }
+  Serial.println("----------------------");
 }
