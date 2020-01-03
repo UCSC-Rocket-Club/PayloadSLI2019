@@ -8,61 +8,15 @@
  
 #include <SPI.h>
 #include <RH_RF95.h>
-#define FLIGHT_MODE  1
+#define FLIGHT_MODE  1 
+// When flight mode is enabled, do not run any serial code because it will not run anything else 
+// and waste energy. This will disable any serial logs, so 
+// use FLIGHT_MODE 0 for debugging, and FLIGHT_MODE 1 for actual flights
  
 // for Feather32u4 RFM9x
 #define RFM95_CS 8
 #define RFM95_RST 4
 #define RFM95_INT 7
-/* for feather m0 RFM9x
-#define RFM95_CS 8
-#define RFM95_RST 4
-#define RFM95_INT 3
-*/
- 
-/* for shield 
-#define RFM95_CS 10
-#define RFM95_RST 9
-#define RFM95_INT 7
-*/
- 
-/* Feather 32u4 w/wing
-#define RFM95_RST     11   // "A"
-#define RFM95_CS      10   // "B"
-#define RFM95_INT     2    // "SDA" (only SDA/SCL/RX/TX have IRQ!)
-*/
- 
-/* Feather m0 w/wing 
-#define RFM95_RST     11   // "A"
-#define RFM95_CS      10   // "B"
-#define RFM95_INT     6    // "D"
-*/
- 
-#if defined(ESP8266)
-  /* for ESP w/featherwing */ 
-  #define RFM95_CS  2    // "E"
-  #define RFM95_RST 16   // "D"
-  #define RFM95_INT 15   // "B"
- 
-#elif defined(ESP32)  
-  /* ESP32 feather w/wing */
-  #define RFM95_RST     27   // "A"
-  #define RFM95_CS      33   // "B"
-  #define RFM95_INT     12   //  next to A
- 
-#elif defined(NRF52)  
-  /* nRF52832 feather w/wing */
-  #define RFM95_RST     7   // "A"
-  #define RFM95_CS      11   // "B"
-  #define RFM95_INT     31   // "C"
-  
-#elif defined(TEENSYDUINO)
-  /* Teensy 3.x w/wing */
-  #define RFM95_RST     9   // "A"
-  #define RFM95_CS      10   // "B"
-  #define RFM95_INT     4    // "C"
-#endif
- 
  
 // Change to 434.0 or other frequency, must match RX's freq!
 #define RF95_FREQ 915.0
@@ -80,6 +34,7 @@ void setup()
   digitalWrite(RFM95_RST, HIGH);
   
   #ifdef FLIGHT_MODE
+  // initialize serial
   Serial.begin(115200);
   while (!Serial) {
     delay(1);
@@ -125,10 +80,6 @@ void setup()
   // If you are using RFM95/96/97/98 modules which uses the PA_BOOST transmitter pin, then
   // you can set transmitter powers from 5 to 23 dBm:
   rf95.setTxPower(23, false);
-
-
-
-
 }
 
 static int check = -1;
@@ -139,40 +90,36 @@ static uint8_t backsy[] = "!! -- Finished Deployment -- !!";
 static uint8_t backp[] = "!! -- Pinged -- !!";
 static uint8_t backbs[] = "\n** -- Send 'f' , 'y' , 'n' , 'p' for valid input -- **";
 
-void loop()
-{
+void loop() {
  
- 
-  if (rf95.available())
-  {    
+
+  if (rf95.available()) {    
     // initialization for message array
     uint8_t buf[RH_RF95_MAX_MESSAGE_LEN];
     uint8_t len = sizeof(buf);
 
-    #ifdef FLIGHT_MODE
-    if (rf95.recv(buf, &len) )
-    {
+    // if data received
+    if (rf95.recv(buf, &len) ) {
       
       // writing and printing data block
       digitalWrite(LED, HIGH);
       RH_RF95::printBuffer("Received: ", buf, len);
       Serial.println("------------------------------------");
       
-      //Serial.print("Got: ");
-      
+      Serial.print("Got: ");
       Serial.println((char*)buf);
 
       Serial.println("------------------------------------");
 
-      //Serial.print("RSSI: ");
-      //Serial.println(rf95.lastRssi(), DEC);
+      Serial.print("RSSI: ");
+      Serial.println(rf95.lastRssi(), DEC);
 
       // ------------- input checking -------------
       
       char* input = (char*)buf;
         
       switch(*input){
-         case 'f' :
+         case 'f':
              rf95.send(backf, sizeof(backf));
              check = 0;
              break;
@@ -191,15 +138,14 @@ void loop()
                 rf95.send(backcf, sizeof(backcf));
              break;
                 
-         case 'p' :
+         case 'p':
              rf95.send(backp, sizeof(backp));
              check = 2;
              break;
 
-         case '\n' :
-             break;
+         //case '\n':
+            // break;
 
-         
          default:
              //rf95.send(backbs, sizeof(backbs));
              //check = 3;
@@ -207,22 +153,11 @@ void loop()
          
       }
       
-      
-      // ------------- Finish -------------
-      
-      // Send a reply
-      //uint8_t data[] = "And hello back to you";
-      //rf95.send(data, sizeof(data));
-      //rf95.waitPacketSent();
-      //Serial.println("Sent a reply");
-      
       digitalWrite(LED, LOW);
     }
-    #endif
 
     #ifdef FLIGHT_MODE
-    else
-    {
+    else {
       Serial.println("!! -- Receive failed -- !!");
     }
     #endif
