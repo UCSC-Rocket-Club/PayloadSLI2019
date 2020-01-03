@@ -2382,7 +2382,8 @@ This footprint was designed to help hold the alignment of a through-hole compone
 <part name="Q2" library="SparkFun-DiscreteSemi" library_urn="urn:adsk.eagle:library:514" deviceset="MOSFET-NCH" device="-FQP30N06L" package3d_urn="urn:adsk.eagle:package:38447/1" value="100V 14A"/>
 <part name="J5" library="1935161" deviceset="1935161" device="" value=""/>
 <part name="GND3" library="supply1" deviceset="GND" device=""/>
-<part name="Q3" library="SparkFun-DiscreteSemi" library_urn="urn:adsk.eagle:library:514" deviceset="MOSFET-NCH" device="-FQP30N06L" package3d_urn="urn:adsk.eagle:package:38447/1" value="100V 14A"/>
+<part name="J6" library="1935161" deviceset="1935161" device="" value=""/>
+<part name="GND5" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -2418,9 +2419,6 @@ READER</text>
 <text x="18.542" y="77.216" size="1.778" layer="94">Source</text>
 <text x="18.796" y="68.58" size="1.778" layer="94">Drain</text>
 <text x="30.48" y="52.578" size="1.778" layer="94" rot="R90">Nichrome Wire</text>
-<text x="82.042" y="31.496" size="1.778" layer="94">Source</text>
-<text x="82.296" y="22.86" size="1.778" layer="94">Drain</text>
-<text x="71.12" y="22.86" size="1.778" layer="94">Gate</text>
 <text x="76.2" y="58.42" size="1.778" layer="95">Nichrome Wire Mosfet</text>
 </plain>
 <instances>
@@ -2481,9 +2479,12 @@ READER</text>
 <instance part="GND3" gate="1" x="17.78" y="83.82" smashed="yes" rot="R180">
 <attribute name="VALUE" x="20.32" y="86.36" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="Q3" gate="NMOS" x="78.74" y="27.94" smashed="yes">
-<attribute name="NAME" x="83.82" y="27.94" size="1.778" layer="95" font="vector"/>
-<attribute name="VALUE" x="83.82" y="25.4" size="1.778" layer="96" font="vector"/>
+<instance part="J6" gate="G$1" x="99.06" y="24.13" smashed="yes">
+<attribute name="NAME" x="96.51451875" y="29.857340625" size="1.272740625" layer="95"/>
+<attribute name="VALUE" x="96.51191875" y="16.48576875" size="1.274040625" layer="96"/>
+</instance>
+<instance part="GND5" gate="1" x="83.82" y="26.67" smashed="yes" rot="R270">
+<attribute name="VALUE" x="81.28" y="29.21" size="1.778" layer="96" rot="R270"/>
 </instance>
 </instances>
 <busses>
@@ -2515,6 +2516,11 @@ READER</text>
 <pinref part="GND3" gate="1" pin="GND"/>
 <pinref part="Q2" gate="NMOS" pin="D"/>
 <wire x1="17.78" y1="81.28" x2="17.78" y2="78.74" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="J6" gate="G$1" pin="1"/>
+<wire x1="91.44" y1="26.67" x2="86.36" y2="26.67" width="0.1524" layer="91"/>
+<pinref part="GND5" gate="1" pin="GND"/>
 </segment>
 </net>
 <net name="MOSI" class="0">
@@ -2766,6 +2772,11 @@ READER</text>
 <junction x="45.72" y="44.45"/>
 <label x="17.78" y="50.8" size="1.778" layer="95" rot="R90"/>
 </segment>
+<segment>
+<pinref part="J6" gate="G$1" pin="2"/>
+<wire x1="91.44" y1="21.59" x2="86.36" y2="21.59" width="0.1524" layer="91"/>
+<label x="84.074" y="21.59" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="BATT+" class="0">
 <segment>
@@ -2786,12 +2797,6 @@ READER</text>
 <pinref part="J5" gate="G$1" pin="1"/>
 <pinref part="Q2" gate="NMOS" pin="S"/>
 <wire x1="17.78" y1="62.23" x2="17.78" y2="68.58" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="4" class="0">
-<segment>
-<pinref part="Q3" gate="NMOS" pin="G"/>
-<wire x1="73.66" y1="25.4" x2="71.12" y2="25.4" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>

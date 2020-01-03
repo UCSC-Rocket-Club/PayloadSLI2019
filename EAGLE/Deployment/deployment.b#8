@@ -659,6 +659,19 @@ design rules under a new name.</description>
 <attribute name="PROD_ID" value="CONN-08438" x="-52.07" y="-50.8" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="-53.34" y="-52.832" size="0.6096" layer="27" font="vector" ratio="20"/>
 </element>
+<element name="Q2" library="SparkFun-DiscreteSemi" library_urn="urn:adsk.eagle:library:514" package="TO220V" package3d_urn="urn:adsk.eagle:package:38447/1" value="100V 14A" x="-46.99" y="-69.85" smashed="yes">
+<attribute name="NAME" x="-52.324" y="-69.596" size="0.6096" layer="25" font="vector" ratio="20" rot="R90" align="bottom-center"/>
+<attribute name="PROD_ID" value="TRANS-10060" x="-46.99" y="-55.88" size="1.778" layer="27" display="off"/>
+<attribute name="VALUE" x="-41.656" y="-69.596" size="0.6096" layer="27" font="vector" ratio="20" rot="R90" align="top-center"/>
+</element>
+<element name="J5" library="1935161" package="PHOENIX_1935161" value="" x="-48.26" y="-59.69" smashed="yes">
+<attribute name="DESCRIPTION" value=" Conn Terminal Blocks 2 POS 5mm Solder ST Thru-Hole 16A " x="-59.69" y="-50.8" size="1.778" layer="27" display="off"/>
+<attribute name="DIGI-KEY_PART_NUMBER" value="277-1667-ND" x="-59.69" y="-50.8" size="1.778" layer="27" display="off"/>
+<attribute name="DIGI-KEY_PURCHASE_URL" value="https://www.digikey.com/product-detail/en/phoenix-contact/1935161/277-1667-ND/568614?utm_source=snapeda&amp;utm_medium=aggregator&amp;utm_campaign=symbol" x="-59.69" y="-50.8" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="Phoenix Contact" x="-59.69" y="-50.8" size="1.778" layer="27" display="off"/>
+<attribute name="MP" value="1935161" x="-59.69" y="-50.8" size="1.778" layer="27" display="off"/>
+<attribute name="PACKAGE" value="None" x="-59.69" y="-50.8" size="1.778" layer="27" display="off"/>
+</element>
 </elements>
 <signals>
 <signal name="GND">
@@ -666,6 +679,8 @@ design rules under a new name.</description>
 <contactref element="J3" pad="2"/>
 <contactref element="Q1" pad="2"/>
 <contactref element="J4" pad="6"/>
+<contactref element="Q2" pad="2"/>
+<wire x1="-39.37" y1="-50.8" x2="-46.99" y2="-69.85" width="0" layer="19" extent="1-1"/>
 <wire x1="-45.76" y1="-40.64" x2="-39.37" y2="-50.8" width="0" layer="19" extent="1-1"/>
 <wire x1="-46.99" y1="-3.81" x2="-45.76" y2="-40.64" width="0" layer="19" extent="1-1"/>
 <wire x1="-21.59" y1="1.27" x2="-46.99" y2="-3.81" width="0" layer="19" extent="1-1"/>
@@ -725,6 +740,8 @@ design rules under a new name.</description>
 <signal name="2">
 <contactref element="JP3" pad="12"/>
 <contactref element="Q1" pad="1"/>
+<contactref element="Q2" pad="1"/>
+<wire x1="-49.53" y1="-3.81" x2="-49.53" y2="-69.85" width="0" layer="19" extent="1-1"/>
 <wire x1="-13.97" y1="6.35" x2="-49.53" y2="-3.81" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="AREF">
@@ -782,6 +799,14 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$9">
 <contactref element="J4" pad="8"/>
+</signal>
+<signal name="N$2">
+<contactref element="J5" pad="1"/>
+<contactref element="Q2" pad="3"/>
+<wire x1="-50.76" y1="-59.69" x2="-44.45" y2="-69.85" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="9V1">
+<contactref element="J5" pad="2"/>
 </signal>
 </signals>
 <mfgpreviewcolors>

@@ -778,6 +778,8 @@ design rules under a new name.</description>
 </signal>
 <signal name="3">
 <contactref element="JP3" pad="11"/>
+<contactref element="Q2" pad="1"/>
+<wire x1="-16.51" y1="6.35" x2="-49.53" y2="-69.85" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="EN">
 <contactref element="JP3" pad="2"/>

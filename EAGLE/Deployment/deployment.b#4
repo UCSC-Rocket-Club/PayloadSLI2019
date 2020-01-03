@@ -745,8 +745,6 @@ design rules under a new name.</description>
 <signal name="2">
 <contactref element="JP3" pad="12"/>
 <contactref element="Q1" pad="1"/>
-<contactref element="Q2" pad="1"/>
-<wire x1="-49.53" y1="-3.81" x2="-49.53" y2="-69.85" width="0" layer="19" extent="1-1"/>
 <wire x1="-13.97" y1="6.35" x2="-49.53" y2="-3.81" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="AREF">
@@ -812,14 +810,8 @@ design rules under a new name.</description>
 <contactref element="Q2" pad="3"/>
 <wire x1="-50.76" y1="-59.69" x2="-44.45" y2="-69.85" width="0" layer="19" extent="1-1"/>
 </signal>
-<signal name="GND1">
-<contactref element="Q3" pad="2"/>
-</signal>
 <signal name="4">
 <contactref element="Q3" pad="1"/>
-</signal>
-<signal name="N$3">
-<contactref element="Q3" pad="3"/>
 </signal>
 </signals>
 <mfgpreviewcolors>

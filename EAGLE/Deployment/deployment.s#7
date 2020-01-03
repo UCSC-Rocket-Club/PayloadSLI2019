@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.5.2">
+<eagle version="9.2.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -2382,6 +2382,7 @@ This footprint was designed to help hold the alignment of a through-hole compone
 <part name="Q2" library="SparkFun-DiscreteSemi" library_urn="urn:adsk.eagle:library:514" deviceset="MOSFET-NCH" device="-FQP30N06L" package3d_urn="urn:adsk.eagle:package:38447/1" value="100V 14A"/>
 <part name="J5" library="1935161" deviceset="1935161" device="" value=""/>
 <part name="GND3" library="supply1" deviceset="GND" device=""/>
+<part name="Q3" library="SparkFun-DiscreteSemi" library_urn="urn:adsk.eagle:library:514" deviceset="MOSFET-NCH" device="-FQP30N06L" package3d_urn="urn:adsk.eagle:package:38447/1" value="100V 14A"/>
 </parts>
 <sheets>
 <sheet>
@@ -2405,7 +2406,7 @@ This footprint was designed to help hold the alignment of a through-hole compone
 <wire x1="0" y1="7.62" x2="0" y2="91.44" width="0.1524" layer="94"/>
 <wire x1="0" y1="91.44" x2="66.04" y2="91.44" width="0.1524" layer="94"/>
 <wire x1="66.04" y1="35.56" x2="66.04" y2="7.62" width="0.1524" layer="94"/>
-<text x="40.132" y="11.938" size="2.54" layer="94">E-MATCH</text>
+<text x="7.112" y="11.938" size="2.54" layer="94">E-MATCH &amp; NICHROME WIRE</text>
 <text x="78.74" y="45.72" size="2.54" layer="94">FEATHER 32U4 I/O</text>
 <text x="129.54" y="10.16" size="2.54" layer="94">SD
 READER</text>
@@ -2417,6 +2418,8 @@ READER</text>
 <text x="18.542" y="77.216" size="1.778" layer="94">Source</text>
 <text x="18.796" y="68.58" size="1.778" layer="94">Drain</text>
 <text x="30.48" y="52.578" size="1.778" layer="94" rot="R90">Nichrome Wire</text>
+<text x="82.042" y="26.416" size="1.778" layer="94">Source</text>
+<text x="82.296" y="17.78" size="1.778" layer="94">Drain</text>
 </plain>
 <instances>
 <instance part="U$19" gate="G$1" x="86.36" y="78.74" smashed="yes" rot="R90">
@@ -2475,6 +2478,10 @@ READER</text>
 </instance>
 <instance part="GND3" gate="1" x="17.78" y="83.82" smashed="yes" rot="R180">
 <attribute name="VALUE" x="20.32" y="86.36" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="Q3" gate="NMOS" x="78.74" y="22.86" smashed="yes">
+<attribute name="NAME" x="83.82" y="22.86" size="1.778" layer="95" font="vector"/>
+<attribute name="VALUE" x="83.82" y="20.32" size="1.778" layer="96" font="vector"/>
 </instance>
 </instances>
 <busses>
@@ -2777,6 +2784,24 @@ READER</text>
 <pinref part="J5" gate="G$1" pin="1"/>
 <pinref part="Q2" gate="NMOS" pin="S"/>
 <wire x1="17.78" y1="62.23" x2="17.78" y2="68.58" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="GND1" class="0">
+<segment>
+<pinref part="Q3" gate="NMOS" pin="D"/>
+<wire x1="81.28" y1="30.48" x2="81.28" y2="27.94" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="4" class="0">
+<segment>
+<pinref part="Q3" gate="NMOS" pin="G"/>
+<wire x1="73.66" y1="20.32" x2="71.12" y2="20.32" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$3" class="0">
+<segment>
+<pinref part="Q3" gate="NMOS" pin="S"/>
+<wire x1="81.28" y1="11.43" x2="81.28" y2="17.78" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
