@@ -8,7 +8,7 @@
  
 #include <SPI.h>
 #include <RH_RF95.h>
-#define FLIGHT_MODE  1 
+//#define FLIGHT_MODE  0
 // When flight mode is enabled, do not run any serial code because it will not run anything else 
 // and waste energy. This will disable any serial logs, so 
 // use FLIGHT_MODE 0 for debugging, and FLIGHT_MODE 1 for actual flights
@@ -32,17 +32,18 @@ void setup()
   pinMode(LED, OUTPUT);
   pinMode(RFM95_RST, OUTPUT);
   digitalWrite(RFM95_RST, HIGH);
-  
+  /*
   #ifdef FLIGHT_MODE
   // initialize serial
   Serial.begin(115200);
   while (!Serial) {
     delay(1);
   }
+  
   delay(100);
  
   Serial.println("Feather LoRa RX Test!");
-  #endif
+  #endif*/
  
   // manual reset
   digitalWrite(RFM95_RST, LOW);
@@ -50,18 +51,21 @@ void setup()
   digitalWrite(RFM95_RST, HIGH);
   delay(10);
 
-  #ifdef FLIGHT_MODE 
+  /*#ifdef FLIGHT_MODE 
   while (!rf95.init()) {
     Serial.println("LoRa radio init failed");
     Serial.println("Uncomment '#define SERIAL_DEBUG' in RH_RF95.cpp for detailed debug info");
     while (1);
   }
-  #endif
-  
+  #endif*/
+
+  /*
   #ifdef FLIGHT_MODE
   Serial.println("LoRa radio init OK!");
   #endif
-  
+  */
+
+  /*
   // Defaults after init are 434.0MHz, modulation GFSK_Rb250Fd250, +13dbM
   #ifdef FLIGHT_MODE
   if (!rf95.setFrequency(RF95_FREQ)) {
@@ -69,10 +73,13 @@ void setup()
     while (1);
   }
   #endif
+  */
 
+  /*
   #ifdef FLIGHT_MODE
   Serial.print("Set Freq to: "); Serial.println(RF95_FREQ);
   #endif
+  */
   
   // Defaults after init are 434.0MHz, 13dBm, Bw = 125 kHz, Cr = 4/5, Sf = 128chips/symbol, CRC on
  
@@ -101,20 +108,20 @@ void loop() {
     // if data received
     if (rf95.recv(buf, &len) ) {
 
-      Serial.println("------------------------------------");
+      //Serial.println("------------------------------------");
       
       // writing and printing data block
       digitalWrite(LED, HIGH);
       RH_RF95::printBuffer("Received: ", buf, len);
       //Serial.println(Serial.parseInt(buf));
-
+      /*
       Serial.print("Got: ");
       Serial.println((char*)buf);
 
       Serial.print("RSSI: ");
       Serial.println(rf95.lastRssi(), DEC);
 
-      Serial.println("------------------------------------");
+      Serial.println("------------------------------------");*/
 
       // ------------- input checking -------------
       
@@ -153,13 +160,13 @@ void loop() {
       }
       digitalWrite(LED, LOW);
     }
-
+  /*
     #ifdef FLIGHT_MODE
     else {
       Serial.println("!! -- Receive failed -- !!");
     }
     #endif
-
+*/
 
   }
 }
