@@ -83,36 +83,38 @@ void setup()
 }
 
 static int check = -1;
-static uint8_t backf[] = "?? -- Are you sure you want to fire? y/n -- ??";
-static uint8_t backcf[] = "** -- Enter f before y to fire -- **";
-static uint8_t backy[] = "!! -- Deplyoying Now -- !!";
-static uint8_t backsy[] = "!! -- Finished Deployment -- !!";
-static uint8_t backp[] = "!! -- Pinged -- !!";
-static uint8_t backbs[] = "\n** -- Send 'f' , 'y' , 'n' , 'p' for valid input -- **";
+static uint8_t confirmFireMsg[] = "?? -- Are you sure you want to fire? y/n -- ??";
+static uint8_t abortingMsg[] = "!! -- Aborting -- !!";
+static uint8_t fireInstructionMsg[] = "** -- Enter f before y to fire -- **";
+static uint8_t deployingMsg[] = "!! -- Deploying Now -- !!";
+static uint8_t finishedDeployingMsg[] = "!! -- Finished Deployment -- !!";
+static uint8_t invalidInputMsg[] = "**-- Not a valid input,  send 'f' , 'y' , 'n' , or 'p'-- **";
 
 void loop() {
  
 
   if (rf95.available()) {    
     // initialization for message array
-    uint8_t buf[RH_RF95_MAX_MESSAGE_LEN];
+    uint8_t buf[3];
     uint8_t len = sizeof(buf);
 
     // if data received
     if (rf95.recv(buf, &len) ) {
+
+      Serial.println("------------------------------------");
       
       // writing and printing data block
       digitalWrite(LED, HIGH);
       RH_RF95::printBuffer("Received: ", buf, len);
-      Serial.println("------------------------------------");
-      
+      //Serial.println(Serial.parseInt(buf));
+
       Serial.print("Got: ");
       Serial.println((char*)buf);
 
-      Serial.println("------------------------------------");
-
       Serial.print("RSSI: ");
       Serial.println(rf95.lastRssi(), DEC);
+
+      Serial.println("------------------------------------");
 
       // ------------- input checking -------------
       
@@ -120,39 +122,35 @@ void loop() {
         
       switch(*input){
          case 'f':
-             rf95.send(backf, sizeof(backf));
+             rf95.send(confirmFireMsg, sizeof(confirmFireMsg));
              check = 0;
              break;
+
+         case 'n':
+              rf95.send(abortingMsg, sizeof(abortingMsg));
+              break;
              
          case 'y':
              if(check == 0){ 
-                rf95.send(backy, sizeof(backy));
+                rf95.send(deployingMsg, sizeof(deployingMsg));
                 digitalWrite(10,HIGH);
-                delay(5000);
+                delay(2000);
                 digitalWrite(10,LOW);
- 
-                rf95.send(backsy, sizeof(backsy));
+
+                rf95.send(finishedDeployingMsg, sizeof(finishedDeployingMsg));
                 check = 1;
              }
              else
-                rf95.send(backcf, sizeof(backcf));
+                rf95.send(fireInstructionMsg, sizeof(fireInstructionMsg));
              break;
-                
-         case 'p':
-             rf95.send(backp, sizeof(backp));
-             check = 2;
-             break;
-
-         //case '\n':
-            // break;
-
+             
          default:
              //rf95.send(backbs, sizeof(backbs));
              //check = 3;
+             rf95.send(invalidInputMsg, sizeof(invalidInputMsg));
              break;
          
       }
-      
       digitalWrite(LED, LOW);
     }
 
