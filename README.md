@@ -38,8 +38,7 @@ In Mac this state looks like nothing showing up under ports, on the PC it gives 
 
 1. First, double check that you have verbose mode enabled (see Instructions to run). 
 2. Double check that your USB cable is not charge-only
-2. Hit the reset button, and hold it for like a second. The builtin LED should begin pulsing, then it might show up.
-3. (Optional) If you think it may be acting this way because you put on bad code, upload Blink (File -> Examples -> 0.1 Basics -> Blink).
+3. Upload Blink (File -> Examples -> 0.1 Basics -> Blink), and hit the reset button shortly after clicking upload. The builtin LED should begin pulsing. 
 3. If this doesn't work, follow the following steps to re-burn the bootloader:
 
 ### How to re-burn the bootloader:
