@@ -8,10 +8,10 @@
  
 #include <SPI.h>
 #include <RH_RF95.h>
-#define FLIGHT_MODE  1 
+//#define DEBUG_MODE  0
 // When flight mode is enabled, do not run any serial code because it will not run anything else 
 // and waste energy. This will disable any serial logs, so 
-// use FLIGHT_MODE 0 for debugging, and FLIGHT_MODE 1 for actual flights
+// use DEBUG_MODE 0 for debugging, and DEBUG_MODE 1 for actual flights
  
 // for Feather32u4 RFM9x
 #define RFM95_CS 8
@@ -33,7 +33,7 @@ void setup()
   pinMode(RFM95_RST, OUTPUT);
   digitalWrite(RFM95_RST, HIGH);
   
-  #ifdef FLIGHT_MODE
+  #ifdef DEBUG_MODE
   // initialize serial
   Serial.begin(115200);
   while (!Serial) {
@@ -50,7 +50,16 @@ void setup()
   digitalWrite(RFM95_RST, HIGH);
   delay(10);
 
-  #ifdef FLIGHT_MODE 
+  while (!rf95.init()) {
+    ;
+  }
+
+    delay(5000);
+    digitalWrite(LED, HIGH);
+    delay(5000);
+    digitalWrite(LED, LOW);
+
+  #ifdef DEBUG_MODE 
   while (!rf95.init()) {
     Serial.println("LoRa radio init failed");
     Serial.println("Uncomment '#define SERIAL_DEBUG' in RH_RF95.cpp for detailed debug info");
@@ -58,19 +67,23 @@ void setup()
   }
   #endif
   
-  #ifdef FLIGHT_MODE
+  #ifdef DEBUG_MODE
   Serial.println("LoRa radio init OK!");
   #endif
   
   // Defaults after init are 434.0MHz, modulation GFSK_Rb250Fd250, +13dbM
-  #ifdef FLIGHT_MODE
+  //#ifdef DEBUG_MODE
   if (!rf95.setFrequency(RF95_FREQ)) {
-    Serial.println("setFrequency failed");
+    delay(5000);
+    digitalWrite(LED, HIGH);
+    delay(5000);
+    digitalWrite(LED, LOW);
+    //Serial.println("setFrequency failed");
     while (1);
   }
-  #endif
+  //#endif
 
-  #ifdef FLIGHT_MODE
+  #ifdef DEBUG_MODE
   Serial.print("Set Freq to: "); Serial.println(RF95_FREQ);
   #endif
   
@@ -154,7 +167,7 @@ void loop() {
       digitalWrite(LED, LOW);
     }
 
-    #ifdef FLIGHT_MODE
+    #ifdef DEBUG_MODE
     else {
       Serial.println("!! -- Receive failed -- !!");
     }
