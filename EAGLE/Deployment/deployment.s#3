@@ -2421,6 +2421,7 @@ READER</text>
 <text x="82.042" y="31.496" size="1.778" layer="94">Source</text>
 <text x="82.296" y="22.86" size="1.778" layer="94">Drain</text>
 <text x="71.12" y="22.86" size="1.778" layer="94">Gate</text>
+<text x="76.2" y="58.42" size="1.778" layer="95">Nichrome Wire Mosfet</text>
 </plain>
 <instances>
 <instance part="U$19" gate="G$1" x="86.36" y="78.74" smashed="yes" rot="R90">

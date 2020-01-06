@@ -2418,9 +2418,9 @@ READER</text>
 <text x="18.542" y="77.216" size="1.778" layer="94">Source</text>
 <text x="18.796" y="68.58" size="1.778" layer="94">Drain</text>
 <text x="30.48" y="52.578" size="1.778" layer="94" rot="R90">Nichrome Wire</text>
-<text x="82.042" y="26.416" size="1.778" layer="94">Source</text>
-<text x="82.296" y="17.78" size="1.778" layer="94">Drain</text>
-<text x="71.12" y="17.78" size="1.778" layer="94">Gate</text>
+<text x="82.042" y="31.496" size="1.778" layer="94">Source</text>
+<text x="82.296" y="22.86" size="1.778" layer="94">Drain</text>
+<text x="71.12" y="22.86" size="1.778" layer="94">Gate</text>
 </plain>
 <instances>
 <instance part="U$19" gate="G$1" x="86.36" y="78.74" smashed="yes" rot="R90">
@@ -2480,9 +2480,9 @@ READER</text>
 <instance part="GND3" gate="1" x="17.78" y="83.82" smashed="yes" rot="R180">
 <attribute name="VALUE" x="20.32" y="86.36" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="Q3" gate="NMOS" x="78.74" y="22.86" smashed="yes">
-<attribute name="NAME" x="83.82" y="22.86" size="1.778" layer="95" font="vector"/>
-<attribute name="VALUE" x="83.82" y="20.32" size="1.778" layer="96" font="vector"/>
+<instance part="Q3" gate="NMOS" x="78.74" y="27.94" smashed="yes">
+<attribute name="NAME" x="83.82" y="27.94" size="1.778" layer="95" font="vector"/>
+<attribute name="VALUE" x="83.82" y="25.4" size="1.778" layer="96" font="vector"/>
 </instance>
 </instances>
 <busses>
@@ -2649,11 +2649,6 @@ READER</text>
 <wire x1="38.1" y1="71.12" x2="35.56" y2="71.12" width="0.1524" layer="91"/>
 <label x="33.02" y="71.12" size="1.778" layer="95"/>
 </segment>
-<segment>
-<pinref part="Q2" gate="NMOS" pin="G"/>
-<wire x1="10.16" y1="71.12" x2="7.62" y2="71.12" width="0.1524" layer="91"/>
-<label x="5.08" y="71.12" size="1.778" layer="95"/>
-</segment>
 </net>
 <net name="AREF" class="0">
 <segment>
@@ -2790,7 +2785,7 @@ READER</text>
 <net name="4" class="0">
 <segment>
 <pinref part="Q3" gate="NMOS" pin="G"/>
-<wire x1="73.66" y1="20.32" x2="71.12" y2="20.32" width="0.1524" layer="91"/>
+<wire x1="73.66" y1="25.4" x2="71.12" y2="25.4" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>

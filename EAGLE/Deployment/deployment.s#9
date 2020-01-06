@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.5.2">
+<eagle version="9.2.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -2405,7 +2405,7 @@ This footprint was designed to help hold the alignment of a through-hole compone
 <wire x1="0" y1="7.62" x2="0" y2="91.44" width="0.1524" layer="94"/>
 <wire x1="0" y1="91.44" x2="66.04" y2="91.44" width="0.1524" layer="94"/>
 <wire x1="66.04" y1="35.56" x2="66.04" y2="7.62" width="0.1524" layer="94"/>
-<text x="40.132" y="11.938" size="2.54" layer="94">E-MATCH</text>
+<text x="7.112" y="11.938" size="2.54" layer="94">E-MATCH &amp; NICHROME WIRE</text>
 <text x="78.74" y="45.72" size="2.54" layer="94">FEATHER 32U4 I/O</text>
 <text x="129.54" y="10.16" size="2.54" layer="94">SD
 READER</text>

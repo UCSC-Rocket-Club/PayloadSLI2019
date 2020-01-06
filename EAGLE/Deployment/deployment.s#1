@@ -2383,6 +2383,7 @@ This footprint was designed to help hold the alignment of a through-hole compone
 <part name="J5" library="1935161" deviceset="1935161" device="" value=""/>
 <part name="GND3" library="supply1" deviceset="GND" device=""/>
 <part name="J6" library="1935161" deviceset="1935161" device="" value=""/>
+<part name="GND5" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -2482,6 +2483,9 @@ READER</text>
 <attribute name="NAME" x="96.51451875" y="29.857340625" size="1.272740625" layer="95"/>
 <attribute name="VALUE" x="96.51191875" y="16.48576875" size="1.274040625" layer="96"/>
 </instance>
+<instance part="GND5" gate="1" x="83.82" y="26.67" smashed="yes" rot="R270">
+<attribute name="VALUE" x="81.28" y="29.21" size="1.778" layer="96" rot="R270"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -2512,6 +2516,11 @@ READER</text>
 <pinref part="GND3" gate="1" pin="GND"/>
 <pinref part="Q2" gate="NMOS" pin="D"/>
 <wire x1="17.78" y1="81.28" x2="17.78" y2="78.74" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="J6" gate="G$1" pin="1"/>
+<wire x1="91.44" y1="26.67" x2="86.36" y2="26.67" width="0.1524" layer="91"/>
+<pinref part="GND5" gate="1" pin="GND"/>
 </segment>
 </net>
 <net name="MOSI" class="0">
@@ -2763,6 +2772,11 @@ READER</text>
 <junction x="45.72" y="44.45"/>
 <label x="17.78" y="50.8" size="1.778" layer="95" rot="R90"/>
 </segment>
+<segment>
+<pinref part="J6" gate="G$1" pin="2"/>
+<wire x1="91.44" y1="21.59" x2="86.36" y2="21.59" width="0.1524" layer="91"/>
+<label x="84.074" y="21.59" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="BATT+" class="0">
 <segment>
@@ -2783,18 +2797,6 @@ READER</text>
 <pinref part="J5" gate="G$1" pin="1"/>
 <pinref part="Q2" gate="NMOS" pin="S"/>
 <wire x1="17.78" y1="62.23" x2="17.78" y2="68.58" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$3" class="0">
-<segment>
-<pinref part="J6" gate="G$1" pin="1"/>
-<wire x1="91.44" y1="26.67" x2="86.36" y2="26.67" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$4" class="0">
-<segment>
-<pinref part="J6" gate="G$1" pin="2"/>
-<wire x1="91.44" y1="21.59" x2="86.36" y2="21.59" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
