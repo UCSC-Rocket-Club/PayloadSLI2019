@@ -44,7 +44,7 @@ In Mac this state looks like nothing showing up under ports, on the PC it gives 
 ### How to re-burn the bootloader:
 The bootloader may need to be burned if you flash code that causes a program halt. This will result in the "board not recognized" issue. 
 
-1. Obtain the bootloader ([Pololu USB AVR Programmer v2.1](https://www.pololu.com/docs/0J67/3)), a micro-USB cable, and a computer with Arduino IDE installed
+1. Obtain the ISP flasher ([Pololu USB AVR Programmer v2.1](https://www.pololu.com/docs/0J67/3)), a micro-USB cable, and a computer with Arduino IDE installed
 2. Using a breadboard, connect the following: 
 
 
@@ -57,7 +57,7 @@ The bootloader may need to be burned if you flash code that causes a program hal
 | SCK        | SCK     |
 | MISO       | MI      |
 
-3. Plug in the USB cable to the bootloader (NOT the feather) and your computer
+3. Plug in the USB cable to the ISP flasher (NOT the feather) and your computer
 4. Under ports, there should be two USB devices showing up. Select the first one (I'm not sure it matters, but this is what has always worked for me)
 4. In the Arduino IDE, under `Tools > Programmer`, select "Atmel STK500 development board"
 5. Click "Burn bootloader"
