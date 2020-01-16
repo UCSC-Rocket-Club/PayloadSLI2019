@@ -5,6 +5,8 @@ This is the code for deployment of the Payload for NASA's 2019 SLI Payload chall
 
 We are using the [Adafruit Feather LoRa 32u4 (RFM9x) with the RadioHead (RFM9x) library](https://learn.adafruit.com/adafruit-feather-32u4-radio-with-lora-radio-module/using-the-rfm-9x-radio). 
 
+We are using the [Adafruit Micro-SD Breakout Board](https://cdn-learn.adafruit.com/downloads/pdf/adafruit-micro-sd-breakout-board-card-tutorial.pdf).
+
 ## Instructions to run
 * Open the code in the Arduino IDE
 * Follow [these steps](https://learn.adafruit.com/adafruit-feather-32u4-radio-with-lora-radio-module/setup) for installing the drivers for the Feather
