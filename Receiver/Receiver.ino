@@ -7,7 +7,9 @@
 // It is designed to work with the other example Feather9x_TX
  
 #include <SPI.h>
+#include <SD.h>
 #include <RH_RF95.h>
+//#include <DateTime.h>
 //#define DEBUG_MODE  0
 // When flight mode is enabled, do not run any serial code because it will not run anything else 
 // and waste energy. This will disable any serial logs, so 
@@ -26,7 +28,9 @@ RH_RF95 rf95(RFM95_CS, RFM95_INT);
  
 // Blinky on receipt
 #define LED 13
- 
+
+File myFile;
+
 void setup()
 {
   pinMode(LED, OUTPUT);
@@ -93,6 +97,50 @@ void setup()
   // If you are using RFM95/96/97/98 modules which uses the PA_BOOST transmitter pin, then
   // you can set transmitter powers from 5 to 23 dBm:
   rf95.setTxPower(23, false);
+
+  // --------- SD card setup ---------
+  
+  Serial.print("Initializing SD card...");
+
+  if (!SD.begin(4)) {
+    Serial.println("initialization failed!");
+    while (1);
+  }
+  Serial.println("initialization done.");
+
+
+  myFile = SD.open("test.txt", FILE_WRITE);
+
+   if (myFile) {
+    Serial.print("Writing to test.txt...");
+    myFile.println("");
+    // close the file:
+    myFile.close();
+    Serial.println("done.");
+  } else {
+    // if the file didn't open, print an error:
+    Serial.println("error opening test.txt");
+  }
+
+  myFile = SD.open("test.txt");
+  if (myFile) {
+    Serial.println("test.txt:");
+
+    // read from the file until there's nothing else in it:
+    while (myFile.available()) {
+      Serial.write(myFile.read());
+    }
+    // close the file:
+    myFile.close();
+  } else {
+    // if the file didn't open, print an error:
+    Serial.println("error opening test.txt");
+  }
+  
+  //DateTime.sync(812868312);
+
+ 
+
 }
 
 static int check = -1;
@@ -136,11 +184,13 @@ void loop() {
       switch(*input){
          case 'f':
              rf95.send(confirmFireMsg, sizeof(confirmFireMsg));
+             myFile.println("Confirm Fire - message receieved");
              check = 0;
              break;
 
          case 'n':
               rf95.send(abortingMsg, sizeof(abortingMsg));
+              myFile.println("Aborting - message receieved");
               break;
              
          case 'y':
@@ -149,12 +199,13 @@ void loop() {
                 digitalWrite(10,HIGH);
                 delay(2000);
                 digitalWrite(10,LOW);
-
                 rf95.send(finishedDeployingMsg, sizeof(finishedDeployingMsg));
+                myFile.println("Deploying -message receieved");
                 check = 1;
              }
              else
                 rf95.send(fireInstructionMsg, sizeof(fireInstructionMsg));
+                myFile.println("Message not recognized - message receieved");
              break;
              
          default:
@@ -167,6 +218,7 @@ void loop() {
       digitalWrite(LED, LOW);
     }
 
+    
     #ifdef DEBUG_MODE
     else {
       Serial.println("!! -- Receive failed -- !!");
