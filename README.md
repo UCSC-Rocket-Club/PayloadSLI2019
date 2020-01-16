@@ -38,10 +38,30 @@ In Mac this state looks like nothing showing up under ports, on the PC it gives 
 
 1. First, double check that you have verbose mode enabled (see Instructions to run). 
 2. Double check that your USB cable is not charge-only
-2. Hit the reset button, and hold it for like a second. The builtin LED should begin pulsing, then it might show up.
-3. (Optional) If you think it may be acting this way because you put on bad code, upload Blink (File -> Examples -> 0.1 Basics -> Blink).
-3. Rinse and repeat. It may take a couple dozen tries.
+3. Upload Blink (File -> Examples -> 0.1 Basics -> Blink), and hit the reset button shortly after clicking upload. The builtin LED should begin pulsing. 
+3. If this doesn't work, follow the following steps to re-burn the bootloader:
+
+### How to re-burn the bootloader:
+The bootloader may need to be burned if you flash code that causes a program halt. This will result in the "board not recognized" issue. 
+
+1. Obtain the bootloader ([Pololu USB AVR Programmer v2.1](https://www.pololu.com/docs/0J67/3)), a micro-USB cable, and a computer with Arduino IDE installed
+2. Using a breadboard, connect the following: 
 
 
-## Known issues
-* Sometimes the boards aren't recognized by the computers (tried on Mac and Linux and resetting). It usually works the first time we plug the board into a new computer, then shortly stops working, so this may be a udev issue - still need to investigate this more
+| Bootloader | Feather |
+|------------|---------|
+| GND        | GND     |
+| MOSI       | MO      |
+| VCC        | 3v      |
+| RST        | RST     |
+| SCK        | SCK     |
+| MISO       | MI      |
+
+3. Plug in the USB cable to the bootloader (NOT the feather) and your computer
+4. Under ports, there should be two USB devices showing up. Select the first one (I'm not sure it matters, but this is what has always worked for me)
+4. In the Arduino IDE, under `Tools > Programmer`, select "Atmel STK500 development board"
+5. Click "Burn bootloader"
+
+The board should now be recognized by your computer and able to flash. You can verify this by uploading Blink (`File -> Examples -> 0.1 Basics -> Blink`)
+
+Be sure to not flash your bad code again so you don't have to repeat this!
