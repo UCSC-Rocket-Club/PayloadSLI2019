@@ -8,6 +8,7 @@
  
 #include <SPI.h>
 #include <RH_RF95.h>
+#include <SD.h>
 //#define DEBUG_MODE  0
 // When flight mode is enabled, do not run any serial code because it will not run anything else 
 // and waste energy. This will disable any serial logs, so 
@@ -26,11 +27,17 @@ RH_RF95 rf95(RFM95_CS, RFM95_INT);
  
 // Blinky on receipt
 #define LED 13
- 
+#define RADIO_PIN 8
+#define SDCARD_PIN 10
+
+File dataFile;
+
 void setup()
 {
+  SD.begin(SDCARD_PIN);
+    
   pinMode(LED, OUTPUT);
-  pinMode(RFM95_RST, OUTPUT);
+  pinMode(RFM95_RST,OUTPUT);
   digitalWrite(RFM95_RST, HIGH);
   
   #ifdef DEBUG_MODE
@@ -104,8 +111,10 @@ static uint8_t finishedDeployingMsg[] = "!! -- Finished Deployment -- !!";
 static uint8_t invalidInputMsg[] = "**-- Not a valid input,  send 'f' , 'y' , 'n' , or 'p'-- **";
 
 void loop() {
- 
 
+  char* input = '0';
+  int16_t  rssi = 0;
+  
   if (rf95.available()) {    
     // initialization for message array
     uint8_t buf[3];
@@ -126,12 +135,14 @@ void loop() {
 
       Serial.print("RSSI: ");
       Serial.println(rf95.lastRssi(), DEC);
-
+      
+      rssi = rf95.lastRssi();     // Hold RSSI for datalogging
+            
       Serial.println("------------------------------------");
 
       // ------------- input checking -------------
       
-      char* input = (char*)buf;
+      input = (char*)buf;
         
       switch(*input){
          case 'f':
@@ -144,7 +155,7 @@ void loop() {
               break;
              
          case 'y':
-             if(check == 0){ 
+             if(check ==   0){ 
                 rf95.send(deployingMsg, sizeof(deployingMsg));
                 digitalWrite(10,HIGH);
                 delay(2000);
@@ -173,6 +184,35 @@ void loop() {
     }
     #endif
 
-
   }
+  log(input, rssi);
+}
+
+
+void log (char* input, int16_t radioRSSI){
+  pinMode(RADIO_PIN, HIGH); // Since this pin is active low, this turns off radio SPI
+  pinMode(SDCARD_PIN, LOW); // Since this pin is active low, this turns on SD Card SPI
+
+  // Log data
+
+  // open datalog
+  dataFile = SD.open("datalog.txt", FILE_WRITE);  
+
+  int timestamp = millis() / 1000;  // Seconds since arduino was powered on
+                              // resets after 20 minutes.
+  int minutes = timestamp / 60;
+  int seconds = timestamp % 60; 
+  
+  dataFile.print(minutes);
+  dataFile.print(" : ");
+  dataFile.print(seconds);
+  dataFile.print(" Recieved: ");
+  dataFile.print(*input);
+  dataFile.print(" RSSI: ");
+  dataFile.print(radioRSSI);
+
+  dataFile.close();
+  
+  pinMode(RADIO_PIN, LOW); // Since this pin is active low, this turns on radio SPI
+  pinMode(SDCARD_PIN, HIGH); // Since this pin is active low, this turns off SD Card SPI
 }
