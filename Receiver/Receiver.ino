@@ -19,6 +19,8 @@
 #define RFM95_CS 8
 #define RFM95_RST 4
 #define RFM95_INT 7
+
+#define SD_PIN 10
  
 // Change to 434.0 or other frequency, must match RX's freq!
 #define RF95_FREQ 915.0
@@ -29,10 +31,13 @@ RH_RF95 rf95(RFM95_CS, RFM95_INT);
 // Blinky on receipt
 #define LED 13
 
+#define DEBUG_MODE 0
+
 File myFile;
 
 void setup()
 {
+
   pinMode(LED, OUTPUT);
   pinMode(RFM95_RST, OUTPUT);
   digitalWrite(RFM95_RST, HIGH);
@@ -102,7 +107,7 @@ void setup()
   
   Serial.print("Initializing SD card...");
 
-  if (!SD.begin(4)) {
+  if (!SD.begin(SD_PIN)) {
     Serial.println("initialization failed!");
     while (1);
   }
