@@ -34,7 +34,7 @@ void sdTest() {
     fileExists = 0;
     Serial.println("SD.exists(\"test.txt\")failed - test.txt does not exist");
   }
-
+/*
   //open and close a file
   Serial.println("\nOpening and closing a file...");
   myFile = SD.open("test.txt", FILE_WRITE);
@@ -45,7 +45,7 @@ void sdTest() {
   } else {
     Serial.println("The file test.txt was not created.");
   }
-
+*/
   //open the file and write to it
   Serial.println("\nOpening and writing to the file...");
   myFile = SD.open("test.txt", FILE_WRITE);
@@ -81,7 +81,6 @@ void sdWrite(char* logMessage) {
   if (myFile) {
     myFile.println(outputMessage);
   }
-
 
   //free string memory
   free(outputMessage);
