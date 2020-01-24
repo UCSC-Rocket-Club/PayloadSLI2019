@@ -13,41 +13,44 @@ void blinkLED(int delayTime) {
 // sdTest /////////////////////////////////////////////////////////////////
 //test code to make sure the SD card is working properly
 void sdTest() {
-  Serial.print("Initializing SD card...");
+  Serial.print("Running sdTest()--------------------------------");
 
+  //initialize the SD card
+  Serial.println("Beginning initialization...");
   if (!SD.begin(SD_CS)) {
-    Serial.println("initialization failed!");
+    Serial.println("SD.begin(SD_CS) failed - did not initialize :(");
     while (1);
   } else {
-    Serial.println("initialization done.");
+    Serial.println("SD.begin(SD_CS) passed - succesfully initialized");
   }
 
+  //check to see if a test file already exists
+  int fileExists = 0;
+  Serial.println("\nChecking for an existing file...");
+  if (SD.exists("test.txt")) {
+    fileExists = 1;
+    Serial.println("SD.exists(\"test.txt\") passed - test.txt already exists.");
+  } else {
+    fileExists = 0;
+    Serial.println("SD.exists(\"test.txt\")failed - test.txt does not exist");
+  }
+
+  //open and close a file
+  Serial.println("\nOpening and closing a file...");
   myFile = SD.open("test.txt", FILE_WRITE);
-
-  if (myFile) {
-    Serial.print("Writing to test.txt...");
-    myFile.println("");
-    myFile.close();     // close the file:
-    Serial.println("done.");
+  myFile.close();
+  if (SD.exists("test.txt") && fileExists == 0) {
+    Serial.println("The file test.txt was created.");
+    fileExists = 1;
   } else {
-    // if the file didn't open, print an error:
-    Serial.println("error opening test.txt");
+    Serial.println("The file test.txt was not created.");
   }
 
-  myFile = SD.open("test.txt");
-  if (myFile) {
-    Serial.println("test.txt:");
-
-    // read from the file until there's nothing else in it:
-    while (myFile.available()) {
-      Serial.write(myFile.read());
-    }
-    // close the file:
-    myFile.close();
-  } else {
-    // if the file didn't open, print an error:
-    Serial.println("error opening test.txt");
-  }
+  //open the file and write to it
+  Serial.println("\nOpening and writing to the file...");
+  myFile = SD.open("test.txt", FILE_WRITE);
+  myFile.println("Chip select turns me on");
+  myFile.close();
 }
 
 // sdWrite ////////////////////////////////////////////////////////////////
