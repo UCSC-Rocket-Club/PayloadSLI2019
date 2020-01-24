@@ -13,7 +13,7 @@ void blinkLED(int delayTime) {
 // sdTest /////////////////////////////////////////////////////////////////
 //test code to make sure the SD card is working properly
 void sdTest() {
-  Serial.print("Running sdTest()--------------------------------");
+  Serial.println("Running sdTest()--------------------------------");
 
   //initialize the SD card
   Serial.println("Beginning initialization...");
@@ -53,6 +53,9 @@ void sdTest() {
   myFile.close();
 
   Serial.println("Completed sdTest(). View the contents of test.txt on a normal computer.");
+
+  Serial.println("LOOP");
+  while (1);
 }
 
 // sdWrite ////////////////////////////////////////////////////////////////
@@ -61,7 +64,6 @@ void sdWrite(char* logMessage) {
   //deactivate radio
   digitalWrite(RADIO_CS, HIGH);
   
-  //activate SD card
   digitalWrite(SD_CS, LOW);
   
   //open file
