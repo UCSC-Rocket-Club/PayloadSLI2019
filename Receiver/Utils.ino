@@ -131,10 +131,15 @@ void radioSetup() {
   #endif
 
   rf95.setTxPower(23, false); //set maximum power
+
+  //set the radio chip select to be inactive
+  digitalWrite(RADIO_CS, HIGH);
 }
 
 // sdSetup //////////////////////////////////////////////////////////////////
 void sdSetup() {
+  //set the SD card chip select to be active
+  digitalWrite(SD_CS, LOW);
   #ifndef DEBUG_MODE //if not in debug mode
     //just initialize the SD card
     SD.begin(SD_CS);
