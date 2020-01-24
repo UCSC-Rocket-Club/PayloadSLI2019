@@ -25,9 +25,6 @@
 #define RFM95_INT 7
 #define RF95_FREQ 915.0 //Radio frequency - must be the same between transmitter and reviever
 
-// File for use on the SD card
-File myFile;
-
 // Singleton instance of the radio driver
 RH_RF95 rf95(RADIO_CS, RFM95_INT);
 

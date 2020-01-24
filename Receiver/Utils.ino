@@ -34,28 +34,25 @@ void sdTest() {
     fileExists = 0;
     Serial.println("SD.exists(\"test.txt\")failed - test.txt does not exist");
   }
-/*
-  //open and close a file
-  Serial.println("\nOpening and closing a file...");
-  myFile = SD.open("test.txt", FILE_WRITE);
-  myFile.close();
-  if (SD.exists("test.txt")) {
-    Serial.println("The file test.txt was succesfully created.");
-    fileExists = 1;
-  } else {
-    Serial.println("The file test.txt was not created.");
+
+  Serial.println("\nOpening, writing to, and closing the file multiple times...");
+
+  for (int i = 0; i < 3; i++) {
+    //prepare string to put on SD card
+    char* message = "Chip select turns me on";
+    char* writeString = calloc(4 + strlen(message), sizeof(char)); //length of message + space: + maximum two digits
+    sprintf(writeString, "%d: %s", i, message);
+
+    //open the file and write to it
+    Serial.println("Writing...");
+    File testFile = SD.open("test.txt", FILE_WRITE);
+    testFile.println(writeString);
+    testFile.close();
+
+    free(writeString); //free string
   }
-*/
-  //open the file and write to it
-  Serial.println("\nOpening and writing to the file...");
-  myFile = SD.open("test.txt", FILE_WRITE);
-  myFile.println("Chip select turns me on");
-  myFile.close();
 
-  Serial.println("Completed sdTest(). View the contents of test.txt on a normal computer.");
-
-  Serial.println("LOOP");
-  while (1);
+  Serial.println("\nCompleted sdTest(). View the contents of test.txt on a normal computer.");
 }
 
 // sdWrite ////////////////////////////////////////////////////////////////
@@ -67,7 +64,7 @@ void sdWrite(char* logMessage) {
   digitalWrite(SD_CS, LOW);
   
   //open file
-  myFile = SD.open("log.txt", FILE_WRITE);
+  File logFile = SD.open("log.txt", FILE_WRITE);
 
   //create a string that has the time and log message
   char* outputMessage = calloc(20 + strlen(logMessage), sizeof(char)); //20 = 19(maximum size of long int) + 1 (space)
@@ -78,15 +75,16 @@ void sdWrite(char* logMessage) {
   #endif
   
   //write to the SD card
-  if (myFile) {
-    myFile.println(outputMessage);
+  if (logFile) {
+    logFile.println(outputMessage);
+      //close the file
+      logFile.close();
   }
 
   //free string memory
   free(outputMessage);
   
-  //close the file
-  myFile.close();
+
   
   //deactivate the SD card
   digitalWrite(SD_CS, HIGH);
