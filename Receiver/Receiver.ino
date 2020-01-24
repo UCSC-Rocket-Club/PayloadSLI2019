@@ -8,6 +8,7 @@
 #include <SPI.h>
 #include <SD.h>
 #include <RH_RF95.h>
+#include <string.h>
 
 // Chip Select pins for radio and SD card
 #define SD_CS 10
@@ -42,6 +43,7 @@ void blinkLED(int delayTime);
 void radioSetup();
 void sdSetup();
 void sdTest();
+void sdWrite(char* logMessage);
 
 void setup(){
   #ifdef DEBUG_MODE
@@ -62,7 +64,7 @@ void setup(){
 }
 
 void loop() {
-  if (rf95.available()) {
+  if (rf95.available()) { //if the radio is available
     // initialization for message array
     uint8_t buf[3];
     uint8_t len = sizeof(buf);
@@ -75,7 +77,6 @@ void loop() {
       // writing and printing data block
       digitalWrite(LED, HIGH);
       RH_RF95::printBuffer("Received: ", buf, len);
-      //Serial.println(Serial.parseInt(buf));
 
       Serial.print("Got: ");
       Serial.println((char*)buf);
@@ -92,13 +93,13 @@ void loop() {
       switch (*input) {
         case 'f':
           rf95.send(confirmFireMsg, sizeof(confirmFireMsg));
-          myFile.println("Confirm Fire - message receieved");
+          sdWrite("Confirm Fire - message receieved");
           receivedCharFlag = 0;
           break;
 
         case 'n':
           rf95.send(abortingMsg, sizeof(abortingMsg));
-          myFile.println("Aborting - message receieved");
+          sdWrite("Aborting - message receieved");
           break;
 
         case 'y':
@@ -108,7 +109,7 @@ void loop() {
             delay(2000);
             digitalWrite(10, LOW);
             rf95.send(finishedDeployingMsg, sizeof(finishedDeployingMsg));
-            myFile.println("Deploying -message receieved");
+            sdWrite("Deploying -message receieved");
             receivedCharFlag = 1;
           }
           else
