@@ -17,6 +17,9 @@
 //LED output pin
 #define LED 13
 
+//Mosfet pin (gate)
+#define GATE 2
+
 // Other definitions for Feather32u4 RFM9xi radio
 #define RFM95_RST 4
 #define RFM95_INT 7
@@ -68,70 +71,68 @@ void loop() {
     // initialization for message array
     uint8_t buf[3];
     uint8_t len = sizeof(buf);
-
+    
     // if data received
     if (rf95.recv(buf, &len) ) {
-
-      Serial.println("------------------------------------");
+      #ifdef DEBUG_MODE
+        Serial.println("------------------------------------");
+      #endif
 
       // writing and printing data block
       digitalWrite(LED, HIGH);
       RH_RF95::printBuffer("Received: ", buf, len);
 
-      Serial.print("Got: ");
-      Serial.println((char*)buf);
-
-      Serial.print("RSSI: ");
-      Serial.println(rf95.lastRssi(), DEC);
-
-      Serial.println("------------------------------------");
-
-      // ------------- input checking -------------
+      #ifdef DEBUG_MODE
+        Serial.print("Got: ");
+        Serial.println((char*)buf);
+  
+        Serial.print("RSSI: ");
+        Serial.println(rf95.lastRssi(), DEC);
+  
+        Serial.println("------------------------------------");
+      #endif
 
       char* input = (char*)buf;
-
+      
       switch (*input) {
+        //when f is received
         case 'f':
           rf95.send(confirmFireMsg, sizeof(confirmFireMsg));
           sdWrite("Confirm Fire - message receieved");
           receivedCharFlag = 0;
           break;
-
+       //when n is received
         case 'n':
           rf95.send(abortingMsg, sizeof(abortingMsg));
           sdWrite("Aborting - message receieved");
           break;
-
+        //when y is received
         case 'y':
           if (receivedCharFlag == 0) {
             rf95.send(deployingMsg, sizeof(deployingMsg));
-            digitalWrite(10, HIGH);
+            //trigger the e-match
+            digitalWrite(GATE, HIGH);
             delay(2000);
-            digitalWrite(10, LOW);
+            digitalWrite(GATE, LOW);
             rf95.send(finishedDeployingMsg, sizeof(finishedDeployingMsg));
             sdWrite("Deploying -message receieved");
             receivedCharFlag = 1;
           }
-          else
+          else {
             rf95.send(fireInstructionMsg, sizeof(fireInstructionMsg));
-          myFile.println("Message not recognized - message receieved");
+            sdWrite("Message not recognized - message receieved");
+          }
           break;
-
+        //default case
         default:
-          //rf95.send(backbs, sizeof(backbs));
-          //check = 3;
           rf95.send(invalidInputMsg, sizeof(invalidInputMsg));
           break;
-
       }
       digitalWrite(LED, LOW);
+    } else {
+      #ifdef DEBUG_MODE
+        Serial.println("!! -- Receive failed -- !!");
+      #endif
     }
-
-    #ifdef DEBUG_MODE
-        else {
-          Serial.println("!! -- Receive failed -- !!");
-        }
-    #endif
-
   }
 }
