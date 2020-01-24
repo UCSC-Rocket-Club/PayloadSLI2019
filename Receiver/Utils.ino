@@ -39,8 +39,8 @@ void sdTest() {
   Serial.println("\nOpening and closing a file...");
   myFile = SD.open("test.txt", FILE_WRITE);
   myFile.close();
-  if (SD.exists("test.txt") && fileExists == 0) {
-    Serial.println("The file test.txt was created.");
+  if (SD.exists("test.txt")) {
+    Serial.println("The file test.txt was succesfully created.");
     fileExists = 1;
   } else {
     Serial.println("The file test.txt was not created.");
@@ -51,6 +51,8 @@ void sdTest() {
   myFile = SD.open("test.txt", FILE_WRITE);
   myFile.println("Chip select turns me on");
   myFile.close();
+
+  Serial.println("Completed sdTest(). View the contents of test.txt on a normal computer.");
 }
 
 // sdWrite ////////////////////////////////////////////////////////////////
