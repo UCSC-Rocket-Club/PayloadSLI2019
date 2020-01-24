@@ -138,7 +138,7 @@ void radioSetup() {
 void sdSetup() {
   #ifndef DEBUG_MODE //if not in debug mode
     //just initialize the SD card
-    SD.begin(SD_CS);
+    //SD.begin(SD_CS);
   #endif
 
   #ifdef DEBUG_MODE //if in debug mode

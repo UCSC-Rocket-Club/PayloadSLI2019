@@ -62,7 +62,7 @@ void setup(){
   //Set digital pin for the LED to output mode
   pinMode(LED, OUTPUT);
 
-  radioSetup(); //call the radio setup function
+  //radioSetup(); //call the radio setup function
   sdSetup(); //call the SD setup function
 }
 
