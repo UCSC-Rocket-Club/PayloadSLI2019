@@ -54,10 +54,10 @@ void sdTest() {
 //deal with chip select and write to the SD card
 void sdWrite(char* logMessage) {
   //deactivate radio
-  digitalWrite(RADIO_CS, HIGH);
+  digitalWrite(RADIO_CS, LOW);
   
   //activate SD card
-  digitalWrite(SD_CS, LOW);
+  digitalWrite(SD_CS, HIGH);
   
   //open file
   myFile = SD.open("log.txt", FILE_WRITE);
@@ -83,10 +83,10 @@ void sdWrite(char* logMessage) {
   myFile.close();
   
   //deactivate the SD card
-  digitalWrite(SD_CS, HIGH);
+  digitalWrite(SD_CS, LOW);
   
   //activate the radio
-  digitalWrite(RADIO_CS, LOW);
+  digitalWrite(RADIO_CS, HIGH);
 }
 
 // radioSetup ////////////////////////////////////////////////////////////
@@ -133,13 +133,13 @@ void radioSetup() {
   rf95.setTxPower(23, false); //set maximum power
 
   //set the radio chip select to be inactive
-  digitalWrite(RADIO_CS, HIGH);
+  digitalWrite(RADIO_CS, LOW);
 }
 
 // sdSetup //////////////////////////////////////////////////////////////////
 void sdSetup() {
   //set the SD card chip select to be active
-  digitalWrite(SD_CS, LOW);
+  digitalWrite(SD_CS, HIGH);
   #ifndef DEBUG_MODE //if not in debug mode
     //just initialize the SD card
     SD.begin(SD_CS);
@@ -150,5 +150,5 @@ void sdSetup() {
   #endif
 
   //deactivate the SD card chip select
-  digitalWrite(SD_CS, HIGH);
+  digitalWrite(SD_CS, LOW);
 }
