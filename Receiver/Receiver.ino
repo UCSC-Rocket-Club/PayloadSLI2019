@@ -31,6 +31,7 @@ RH_RF95 rf95(RFM95_CS, RFM95_INT);
 #define SDCARD_PIN 10
 
 File dataFile;
+void log (char* input, int16_t radioRSSI);
 
 void setup()
 {
@@ -114,10 +115,13 @@ void loop() {
 
   char* input = '0';
   int16_t  rssi = 0;
+
+  
   
   if (rf95.available()) {    
     // initialization for message array
-    uint8_t buf[3];
+    Serial.println("working");
+    uint8_t buf[1];
     uint8_t len = sizeof(buf);
 
     // if data received
@@ -185,7 +189,8 @@ void loop() {
     #endif
 
   }
-  log(input, rssi);
+  // Comment the next line if you dont want to log flight data
+  //log(input, rssi);
 }
 
 
