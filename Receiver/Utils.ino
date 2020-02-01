@@ -1,6 +1,7 @@
 //Payload 2020 - Utils.ino
 //Utility functions used by Reveiver.ino
-//Last updated by Rohan Tuli 2020-01-23
+//Last updated by Rohan Tuli 2020-01-31
+//Radio functionality only - no SD card
 
 // blinkLED ///////////////////////////////////////////////////////////////
 void blinkLED(int delayTime) {
@@ -59,12 +60,12 @@ void sdTest() {
 //deal with chip select and write to the SD card
 void sdWrite(char* logMessage) {
   //deactivate radio
-  digitalWrite(RADIO_CS, HIGH);
+  //digitalWrite(RADIO_CS, HIGH);
   
-  digitalWrite(SD_CS, LOW);
+  //digitalWrite(SD_CS, LOW);
   
   //open file
-  File logFile = SD.open("log.txt", FILE_WRITE);
+  //File logFile = SD.open("log.txt", FILE_WRITE);
 
   //create a string that has the time and log message
   char* outputMessage = calloc(20 + strlen(logMessage), sizeof(char)); //20 = 19(maximum size of long int) + 1 (space)
@@ -73,24 +74,24 @@ void sdWrite(char* logMessage) {
   #ifdef DEBUG_MODE
     Serial.println(outputMessage);
   #endif
-  
+  /*
   //write to the SD card
   if (logFile) {
     logFile.println(outputMessage);
       //close the file
       logFile.close();
   }
-
+*/
   //free string memory
   free(outputMessage);
   
 
   
   //deactivate the SD card
-  digitalWrite(SD_CS, HIGH);
+  //digitalWrite(SD_CS, HIGH);
   
   //activate the radio
-  digitalWrite(RADIO_CS, LOW);
+  //digitalWrite(RADIO_CS, LOW);
 }
 
 // radioSetup ////////////////////////////////////////////////////////////

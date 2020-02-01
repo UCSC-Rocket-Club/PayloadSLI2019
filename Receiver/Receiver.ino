@@ -1,5 +1,6 @@
 //Payload 2020 - Reviever.ino
-//Last updated by Rohan Tuli 2020-01-23
+//Last updated by Rohan Tuli 2020-01-31
+//Radio functinality only - no SD card
 
 // Use DEBUG_MODE 0 for debugging, and DEBUG_MODE 1 for actual flights
 #define DEBUG_MODE 0 //When flight mode is enabled, do not run any serial code because it will not run anything else and waste energy. This will disable any serial logs.
@@ -59,8 +60,8 @@ void setup(){
   //Set digital pin for the LED to output mode
   pinMode(LED, OUTPUT);
 
-  //radioSetup(); //call the radio setup function
-  sdSetup(); //call the SD setup function
+  radioSetup(); //call the radio setup function
+  //sdSetup(); //call the SD setup function
 }
 
 void loop() {
